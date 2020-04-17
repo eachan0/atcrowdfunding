@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AdminService extends IService<AdminEntity> {
 
+    void saveOne(AdminEntity entity);
 }

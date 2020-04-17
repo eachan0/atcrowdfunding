@@ -2,16 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/aop
-       http://www.springframework.org/schema/spring-aop.xsd
-       http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx.xsd">
+">
 
     <!-- Import Properties -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
@@ -23,12 +19,11 @@
         <property name="username" value="${jdbc.user}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
-
     <!-- SqlSessionFactory Config -->
     <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
-<!--        <property name="configLocation" value="classpath:mybatis-config.xml"/>-->
+        <!--        <property name="configLocation" value="classpath:mybatis-config.xml"/>-->
         <property name="configuration" ref="configuration"/>
         <property name="globalConfig" ref="globalConfig"/>
         <property name="plugins">
@@ -43,23 +38,17 @@
         <property name="basePackage" value="com.atguigu.crowd.mapper"/>
     </bean>
 
+    <!-- mybatis plus 配置 -->
     <bean id="globalConfig" class="com.baomidou.mybatisplus.core.config.GlobalConfig">
         <property name="dbConfig" ref="dbConfig"/> <!--  非必须  -->
     </bean>
-
+    <!-- 逻辑删除值 -->
     <bean id="dbConfig" class="com.baomidou.mybatisplus.core.config.GlobalConfig.DbConfig">
         <property name="logicDeleteValue" value="1"/>
         <property name="logicNotDeleteValue" value="0"/>
     </bean>
+    <!-- 驼峰形式 -->
     <bean id="configuration" class="com.baomidou.mybatisplus.core.MybatisConfiguration">
         <property name="mapUnderscoreToCamelCase" value="true"/>
     </bean>
-
-    <!-- Transaction manager for a single JDBC DataSource -->
-    <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
-    <!-- 开启注解方式声明事务 -->
-    <tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

@@ -3,6 +3,7 @@ package com.atguigu.crowd.service.impl;
 import com.atguigu.crowd.entity.AdminEntity;
 import com.atguigu.crowd.mapper.AdminMapper;
 import com.atguigu.crowd.service.AdminService;
+import com.baomidou.mybatisplus.extension.api.Assert;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> implements AdminService {
 
+    @Override
+    public void saveOne(AdminEntity entity) {
+        this.save(entity);
+        Assert.fail("我tm故意出错");
+    }
 }

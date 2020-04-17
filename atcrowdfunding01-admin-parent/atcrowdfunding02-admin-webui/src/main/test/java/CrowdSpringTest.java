@@ -1,8 +1,11 @@
 
 import com.atguigu.crowd.entity.AdminEntity;
 import com.atguigu.crowd.mapper.AdminMapper;
+import com.atguigu.crowd.service.AdminService;
 import com.atguigu.crowd.service.impl.AdminServiceImpl;
+import jdk.jshell.spi.ExecutionControl;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,7 @@ import java.sql.SQLException;
  */
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring.xml"})
+@ContextConfiguration(locations = {"classpath:spring.xml","classpath:spring-mybatis.xml","classpath:spring-tx.xml"})
 public class CrowdSpringTest {
 
     @Autowired
@@ -30,8 +33,8 @@ public class CrowdSpringTest {
     @Autowired
     private AdminMapper mapper;
 
-    /*@Autowired
-    private AdminServiceImpl service;*/
+    @Autowired
+    private AdminService service;
 
     @Test
     public void testDataSource() throws SQLException {
@@ -57,5 +60,16 @@ public class CrowdSpringTest {
         log.debug("debug message");
         log.info("info message");
         log.error("error message");
+    }
+
+    @Test
+    public void testTx(){
+        AdminEntity entity = new AdminEntity()
+                .setLoginAcct("test_mapper")
+                .setUserPswd("test_mapper")
+                .setUserName("test_mapper")
+                .setEmail("test_mapper");
+        service.saveOne(entity);
+
     }
 }

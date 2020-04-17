@@ -36,6 +36,16 @@
             <artifactId>spring-webmvc</artifactId>
         </dependency>
 
+        <!--Spring json序列化相关 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
         <!-- Spring APO 相关 -->
         <dependency>
             <groupId>org.aspectj</groupId>

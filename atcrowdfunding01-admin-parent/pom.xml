@@ -11,6 +11,7 @@
         <module>atcrowdfunding02-admin-webui</module>
         <module>atcrowdfunding03-admin-component</module>
         <module>atcrowdfunding04-admin-entity</module>
+        <module>atcrowdfunding05-common-util</module>
         <module>atcrowdfunding06-common-reverse</module>
     </modules>
     <packaging>pom</packaging>
@@ -187,21 +188,6 @@
                 <version>4.13</version>
                 <scope>test</scope>
             </dependency>
-            <!-- 引入Servlet 容器中相关依赖-->
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>4.0.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <!-- JSP 页面使用的依赖-->
-            <dependency>
-                <groupId>javax.servlet.jsp</groupId>
-                <artifactId>jsp-api</artifactId>
-                <version>2.3.3</version>
-                <scope>provided</scope>
-            </dependency>
-
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
