@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="AdminEntity对象", description="管理员账户表")
+@ApiModel(value = "AdminEntity对象", description = "管理员账户表")
 public class Result<T> implements Serializable {
     private static final long serialVersionUID = 7520898978368838174L;
 
@@ -37,7 +37,31 @@ public class Result<T> implements Serializable {
     @ApiModelProperty(value = "适用于分页查询返回数据总量", name = "count")
     private Long count = 0L;
 
-    public static <E> Result<E> success(){
+    public static Result<String> success() {
         return new Result<>();
+    }
+
+    public static <E> Result<E> success(String message) {
+        return new Result<E>().setMessage(message);
+    }
+
+    public static <E> Result<E> success(E data, Long count) {
+        return new Result<E>().setData(data).setCount(count);
+    }
+
+    public static <E> Result<E> success(String message, E data, Long count) {
+        return new Result<E>().setMessage(message).setData(data).setCount(count);
+    }
+
+    public static Result<String> error(String message) {
+        return error(500, message, message);
+    }
+
+    public static Result<String> error(int code, String message) {
+        return error(code, message, message);
+    }
+
+    public static <E> Result<E> error(int code, String message, E data) {
+        return new Result<E>().setStatus(code).setMessage(message).setData(data);
     }
 }

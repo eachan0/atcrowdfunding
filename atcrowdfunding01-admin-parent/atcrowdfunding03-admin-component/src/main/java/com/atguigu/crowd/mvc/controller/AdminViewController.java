@@ -27,7 +27,7 @@ public class AdminViewController {
     private AdminService service;
 
     @GetMapping("test.html")
-    public String getOne(ModelMap map){
+    public String getOne(ModelMap map) {
         AdminEntity entity = service.getById(1);
         map.addAttribute("admin", entity);
         return "target";
