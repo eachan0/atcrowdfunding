@@ -48,6 +48,12 @@
             <artifactId>javax.servlet.jsp-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Spring mvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

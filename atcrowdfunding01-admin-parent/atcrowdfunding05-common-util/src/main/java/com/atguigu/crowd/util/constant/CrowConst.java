@@ -7,5 +7,49 @@ package com.atguigu.crowd.util.constant;
  * @desc CrowConst
  */
 public class CrowConst {
+
+    /**
+     * 异常页面读取信息变量名
+     */
     public static final String ATTR_EXCEPTION = "exception";
+
+    /**
+     * 判断 Ajax请求的请求头-名称
+     */
+    public static final String ATTR_AJAX_HEADER_NAME = "X-Requested-With";
+
+    /**
+     * 判断 Ajax请求的请求头-值
+     */
+    public static final String ATTR_AJAX_HEADER_VALUE = "XMLHttpRequest";
+
+    /**
+     * 登录成功后 session 存储名
+     */
+    public static final String ATTR_LOGIN_NAME = "loginAdmin";
+
+    /**
+     * MD5 加密字符串,前置验证错误的默认消息
+     */
+    public static final String MSG_MD5_ENCODING = "无效的字符串";
+
+    /**
+     * 登陆失败消息提示
+     */
+    public static final String MSG_ACCT_NOT_EXIST = "账户不存在";
+
+    /**
+     * 账户或者密码错误
+     */
+    public static final String MSG_PASSWORD_ERROR = "账户名或者密码错误";
+
+    /**
+     * 未登录访问受保护资源
+     */
+    public static final String MSG_ACCESS_FORBIDDEN = "登录失效,请重新登录";
+
+    /**
+     * 管理员维护界面参数名
+     */
+    public static final String ATTR_ADMIN_PAGE = "adminPageInfo";
 }

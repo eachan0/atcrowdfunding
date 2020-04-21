@@ -3,7 +3,6 @@
   User: zhuyc
   Date: 2020/4/20
   Time: 16:00
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -20,8 +19,9 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/login.css">
-    <script src="jquery/jquery-2.1.1.min.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <title>尚筹网-创意产品众筹平台</title>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -33,15 +33,17 @@
 </nav>
 
 <div class="container">
-
-    <form class="form-signin" role="form" action="admin/do/login.html">
+    <form class="form-signin" role="form" action="admin/do/login.html" method="post">
         <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 管理员登录</h2>
+        <p>${requestScope.exception.message }</p>
         <div class="form-group has-success has-feedback">
-            <input name="username" type="text" class="form-control" id="inputSuccess3" placeholder="请输入登录账号" autofocus>
+            <input value="admin" name="username" type="text" class="form-control"
+                   id="inputSuccess3" placeholder="请输入登录账号" autofocus>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <input name="password" type="text" class="form-control" id="inputSuccess4" placeholder="请输入登录密码" style="margin-top:10px;">
+            <input value="123456" name="password" type="text" class="form-control" id="inputSuccess4"
+                   placeholder="请输入登录密码" style="margin-top:10px;">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <button type="submit" class="btn btn-lg btn-success btn-block"> 登录</button>

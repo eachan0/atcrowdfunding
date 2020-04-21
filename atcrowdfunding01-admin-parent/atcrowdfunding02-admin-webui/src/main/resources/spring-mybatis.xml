@@ -28,7 +28,9 @@
         <property name="globalConfig" ref="globalConfig"/>
         <property name="plugins">
             <array>
-                <bean class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor"/>
+                <bean class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor">
+                    <property name="countSqlParser" ref="countSqlParser"/>
+                </bean>
             </array>
         </property>
     </bean>
@@ -50,5 +52,10 @@
     <!-- 驼峰形式 -->
     <bean id="configuration" class="com.baomidou.mybatisplus.core.MybatisConfiguration">
         <property name="mapUnderscoreToCamelCase" value="true"/>
+    </bean>
+
+    <bean id="countSqlParser" class="com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize">
+        <!-- 设置为 true 可以优化部分 left join 的sql -->
+        <property name="optimizeJoin" value="true"/>
     </bean>
 </beans>

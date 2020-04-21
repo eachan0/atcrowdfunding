@@ -4,10 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.atguigu.crowd.util.CrowdUtil;
 import com.atguigu.crowd.util.Result;
 import com.atguigu.crowd.util.constant.CrowConst;
+import com.atguigu.crowd.util.exception.AccessForbiddenException;
+import com.atguigu.crowd.util.exception.LoginFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,17 +24,23 @@ import java.io.IOException;
 @ControllerAdvice
 public class CrowdExceptionResolver {
 
-    public static final String DEFAULT_NAME = "error";
+    private static final String DEFAULT_NAME = "system-error";
+    private static final String LOGIN_VIEW_NAME = "admin-login";
 
     @ExceptionHandler(value = Exception.class)
     public ModelAndView resolverException(Exception exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        exception.printStackTrace();
         return resolve(HttpStatus.INTERNAL_SERVER_ERROR, exception, request, response);
     }
 
-    /*@ExceptionHandler(value = NullPointerException.class)
-    public ModelAndView resolverException(NullPointerException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        return resolve(HttpStatus.BAD_REQUEST, exception, request, response);
-    }*/
+    @ExceptionHandler(value = {LoginFailedException.class, AccessForbiddenException.class})
+    public ModelAndView resolverLoginException(Exception exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject(CrowConst.ATTR_EXCEPTION, exception);
+        modelAndView.setViewName(LOGIN_VIEW_NAME);
+        return modelAndView;
+    }
+
 
     protected ModelAndView resolve(HttpStatus status, Exception exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
 

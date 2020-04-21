@@ -69,7 +69,7 @@ public class CrowdSpringTest {
                 .setUserPswd("test_mapper")
                 .setUserName("test_mapper")
                 .setEmail("test_mapper");
-        service.saveOne(entity);
+        service.save(entity);
 
     }
 }
