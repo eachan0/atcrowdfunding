@@ -3,21 +3,15 @@ package com.atguigu.crowd.mvc.controller;
 
 import com.atguigu.crowd.entity.AdminEntity;
 import com.atguigu.crowd.service.AdminService;
-import com.atguigu.crowd.util.Result;
 import com.atguigu.crowd.util.constant.CrowConst;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * <p>
@@ -52,11 +46,36 @@ public class AdminController {
     public ModelAndView getPageInfo(String keyword,
                                     @RequestParam(defaultValue = "1") Integer pageNum,
                                     @RequestParam(defaultValue = "10") Integer pageSize) {
-        Result<List<AdminEntity>> pageInfo = service.getPageInfo(keyword, pageNum, pageSize);
+        Page<AdminEntity> pageInfo = service.getPageInfo(keyword, pageNum, pageSize);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin-page");
         modelAndView.addObject(CrowConst.ATTR_ADMIN_PAGE, pageInfo);
         return modelAndView;
+    }
+
+    @GetMapping("remove/{id}/{pageNum}/{keyword}.html")
+    public String removeAdmin(@PathVariable Integer id, @PathVariable Integer pageNum, @PathVariable String keyword) {
+        service.removeById(id);
+        return "redirect:/admin/get/page.html?pageNum=" + pageNum + "&keyword=" + keyword;
+    }
+
+    @PostMapping("save.html")
+    public String saveAdmin(AdminEntity entity) {
+        service.saveAdmin(entity);
+        return "redirect:/admin/get/page.html";
+    }
+
+    @GetMapping("to/edit/page.html")
+    public String modifyAdmin(Integer id, ModelMap modelMap) {
+        AdminEntity entity = service.getById(id);
+        modelMap.addAttribute(CrowConst.ATTR_ADMIN_EDIT, entity);
+        return "admin-edit";
+    }
+
+    @PostMapping("modify.html")
+    public String modifyAdmin(AdminEntity entity, Integer pageNum, String keyword) {
+        service.modifyAdmin(entity);
+        return "redirect:/admin/get/page.html?pageNum=" + pageNum + "&keyword=" + keyword;
     }
 }
 

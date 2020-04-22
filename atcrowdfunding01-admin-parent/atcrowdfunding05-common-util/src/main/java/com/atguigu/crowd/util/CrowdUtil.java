@@ -39,18 +39,6 @@ public class CrowdUtil {
         return DigestUtils.md5DigestAsHex(source.getBytes(StandardCharsets.UTF_8));
     }
 
-    /**
-     * MD5加密字符串
-     *
-     * @param source 源
-     * @param salt   加盐(私密)
-     * @return 加密后字符串
-     */
-    public static String md5Encoding(String source, String salt) {
-        Assert.hasText(salt + source + salt, CrowConst.MSG_MD5_ENCODING);
-        return DigestUtils.md5DigestAsHex(source.getBytes(StandardCharsets.UTF_8));
-    }
-
     public static void main(String[] args) {
         System.out.println(md5Encoding("123456"));
     }

@@ -55,7 +55,7 @@
         requestScope.exception相当于request.getAttribute("exception")
         requestScope.exception.message相当于exception.getMessage()
      -->
-    <h3 style="text-align: center;">${requestScope.exception }</h3>
+    <h3 style="text-align: center;color: red;">${requestScope.exception.message }</h3>
     <button style="width: 150px;margin: 50px auto 0 auto;" class="btn btn-lg btn-success btn-block">点我返回上一步</button>
 </div>
 </body>

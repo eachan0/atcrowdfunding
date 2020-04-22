@@ -1,5 +1,6 @@
 package com.atguigu.crowd.util.exception;
 
+import com.atguigu.crowd.util.enums.ExceptionEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,5 +20,10 @@ public class AppException extends RuntimeException {
     public AppException(int code,String message) {
         super(message);
         this.code = code;
+    }
+
+    public AppException(ExceptionEnum ee){
+        super(ee.getMessage());
+        this.code = ee.getCode();
     }
 }

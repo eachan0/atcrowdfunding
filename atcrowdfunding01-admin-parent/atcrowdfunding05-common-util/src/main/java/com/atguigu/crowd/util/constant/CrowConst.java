@@ -28,6 +28,8 @@ public class CrowConst {
      */
     public static final String ATTR_LOGIN_NAME = "loginAdmin";
 
+    public static final String ATTR_ADMIN_EDIT = "admin";
+
     /**
      * MD5 加密字符串,前置验证错误的默认消息
      */
