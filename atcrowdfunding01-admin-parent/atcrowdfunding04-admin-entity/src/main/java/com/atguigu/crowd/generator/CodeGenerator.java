@@ -1,4 +1,4 @@
-package com.atguigu.crowd;
+package com.atguigu.crowd.generator;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -25,7 +25,7 @@ public class CodeGenerator {
 
         // 全局配置
         GlobalConfig config = new GlobalConfig();
-        config.setOutputDir(System.getProperty("user.dir") + File.separator + "atcrowdfunding06-common-reverse" + File.separator + "src" + File.separator + "main" + File.separator + "java")
+        config.setOutputDir(System.getProperty("user.dir") + File.separator + "atcrowdfunding04-admin-entity" + File.separator + "src" + File.separator + "main" + File.separator + "java")
                 .setFileOverride(false)
                 .setOpen(false)
                 .setEnableCache(false)
@@ -43,10 +43,10 @@ public class CodeGenerator {
         // 数据源配置
         DataSourceConfig dataSource = new DataSourceConfig();
         dataSource.setDbType(DbType.MYSQL)
-                .setUrl("jdbc:mysql://192.168.59.128:3306/project_crowd?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8")
+                .setUrl("jdbc:mysql://192.168.0.199:3306/project_crowd?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai")
                 .setDriverName("com.mysql.cj.jdbc.Driver")
                 .setUsername("root")
-                .setPassword("123456");
+                .setPassword("root");
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
@@ -58,7 +58,7 @@ public class CodeGenerator {
                 .setEntityBooleanColumnRemoveIsPrefix(true)
                 .setRestControllerStyle(true)
                 .setEntityTableFieldAnnotationEnable(true)
-                .setInclude("t_admin");
+                .setInclude("t_role");
 
         PackageConfig pc = new PackageConfig();
         pc.setParent("com.atguigu.crowd")
