@@ -19,7 +19,7 @@ public enum ExceptionEnum {
     /**
      * 唯一索引不满足
      */
-    DUPLICATE_KEY(5001,"数据已存在");
+    DUPLICATE_KEY(HttpStatus.INTERNAL_SERVER_ERROR.value(),"数据已存在");
 
     private int code;
     private String message;

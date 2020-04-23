@@ -46,7 +46,9 @@
     <!-- response.setCharacterEncoding(encoding)必须在response.getWriter()前面 -->
     <filter-mapping>
         <filter-name>characterEncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+<!--            <url-pattern>/*</url-pattern>-->
+            <url-pattern>*.json</url-pattern>
+            <url-pattern>*.html</url-pattern>
     </filter-mapping>
 
     <!-- The front controller of this Spring Web application, responsible for handling all application requests -->
