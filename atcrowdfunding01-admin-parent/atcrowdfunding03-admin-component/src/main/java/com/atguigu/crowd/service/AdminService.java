@@ -49,4 +49,12 @@ public interface AdminService extends IService<AdminEntity> {
      * @param entity 信息
      */
     void modifyAdmin(AdminEntity entity);
+
+    /**
+     * 保存管理员角色关系
+     *
+     * @param id       管理员id
+     * @param roleList 角色id list
+     */
+    void saveAdminRoleRelationship(Integer id, List<Integer> roleList);
 }

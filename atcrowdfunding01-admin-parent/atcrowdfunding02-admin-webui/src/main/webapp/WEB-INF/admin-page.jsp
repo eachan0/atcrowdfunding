@@ -103,8 +103,7 @@
                                         <td>${admin.userName }</td>
                                         <td>${admin.email }</td>
                                         <td>
-                                            <button type="button" class="btn btn-success btn-xs"><i
-                                                    class=" glyphicon glyphicon-check"></i></button>
+                                            <a href="assign/to/assign/role/page.html?id=${admin.id }&pageNum=${requestScope.adminPageInfo.current }&keyword=${param.keyword }" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></a>
                                             <a href="admin/to/edit/page.html?id=${admin.id }&pageNum=${requestScope.adminPageInfo.current }&keyword=${param.keyword }" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></a>
                                             <a href="admin/remove/${admin.id }/${requestScope.adminPageInfo.current }/${param.keyword }.html" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></a>
                                         </td>

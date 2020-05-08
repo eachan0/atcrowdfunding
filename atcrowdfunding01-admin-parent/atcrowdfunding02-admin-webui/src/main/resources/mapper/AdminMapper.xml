@@ -17,4 +17,15 @@
         id, login_acct, user_pswd, user_name, email, create_time
     </sql>
 
+    <insert id="insertRelationship">
+        insert into inner_admin_role(admin_id,role_id) values
+        <foreach collection="roleIds" item="rId" separator=",">
+            (#{id},#{rId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteRelationship">
+        delete from inner_admin_role where admin_id = #{id}
+    </delete>
+
 </mapper>

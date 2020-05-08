@@ -69,6 +69,8 @@ public class CrowdExceptionResolver {
 
             // 设置响应状态码
             response.setStatus(status);
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("application/json");
 
             // 将JSON字符串作为响应体返回给浏览器
             response.getWriter().write(JSON.toJSONString(result));

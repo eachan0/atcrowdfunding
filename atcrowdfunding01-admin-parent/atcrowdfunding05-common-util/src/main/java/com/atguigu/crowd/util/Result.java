@@ -49,6 +49,10 @@ public class Result<T> implements Serializable {
         return new Result<E>().setData(data).setCount(count);
     }
 
+    public static <E> Result<E> success(E data, Integer count) {
+        return new Result<E>().setData(data).setCount(count.longValue());
+    }
+
     public static <E> Result<E> success(String message, E data, Long count) {
         return new Result<E>().setMessage(message).setData(data).setCount(count);
     }

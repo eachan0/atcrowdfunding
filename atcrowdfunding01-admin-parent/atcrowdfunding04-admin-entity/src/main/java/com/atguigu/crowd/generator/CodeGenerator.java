@@ -58,7 +58,7 @@ public class CodeGenerator {
                 .setEntityBooleanColumnRemoveIsPrefix(true)
                 .setRestControllerStyle(true)
                 .setEntityTableFieldAnnotationEnable(true)
-                .setInclude("t_role");
+                .setInclude("t_auth");
 
         PackageConfig pc = new PackageConfig();
         pc.setParent("com.atguigu.crowd")

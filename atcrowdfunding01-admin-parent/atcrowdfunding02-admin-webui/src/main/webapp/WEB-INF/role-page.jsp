@@ -11,9 +11,19 @@
     <%@include file="/WEB-INF/include-header.jsp" %>
     <link rel="stylesheet" href="css/pagination.css"/>
     <script type="text/javascript" src="jquery/jquery.pagination.js"></script>
+    <link rel="stylesheet" href="ztree/zTreeStyle.css"/>
+    <script type="text/javascript" src="ztree/jquery.ztree.all-3.5.min.js"></script>
     <script type="text/javascript" src="crowd/crowd-role.js"></script>
     <script type="text/javascript">
+        const error = res => {
+            let data = res.responseJSON;
+            let msg = data ? (data.message || "系统错误") : res.statusText;
+            layer.msg(res.status + ", " + msg);
+        }
         $(function () {
+
+            const rolePageBody = $("#rolePageBody");
+
             // 1.为分页操作准备初始化数据
             window.pageNum = 1;
             window.pageSize = 10;
@@ -69,11 +79,7 @@
                             layer.msg("操作失败！" + res.message);
                         }
                     },
-                    "error": function (res) {
-                        let data = res.responseJSON;
-                        let msg = data ? (data.message || "系统错误") : res.statusText;
-                        layer.msg(res.status + ", " + msg);
-                    }
+                    "error": error
                 });
             });
 
@@ -88,7 +94,7 @@
             // ②on()函数的第一个参数是事件类型
             // ③on()函数的第二个参数是找到真正要绑定事件的元素的选择器
             // ③on()函数的第三个参数是事件的响应函数
-            $("#rolePageBody").on("click",".pencilBtn",function(){
+            rolePageBody.on("click",".pencilBtn",function(){
                 // 打开模态框
                 $("#editModal").modal("show");
 
@@ -130,11 +136,159 @@
                             layer.msg("操作失败！"+res.message);
                         }
                     },
-                    "error":function(res){
-                        let data = res.responseJSON;
-                        let msg = data ? (data.message || "系统错误") : res.statusText;
-                        layer.msg(res.status + ", " + msg);
-                    }
+                    "error": error
+                });
+            });
+
+            // 8.点击确认模态框中的确认删除按钮执行删除
+            $("#removeRoleBtn").click(function(){
+                // 从全局变量范围获取roleIdArray，转换为JSON字符串
+                let requestBody = JSON.stringify(window.roleIdArray);
+
+                $.ajax({
+                    "url":"role/remove.json",
+                    "type":"post",
+                    "data":requestBody,
+                    "contentType":"application/json;charset=UTF-8",
+                    "dataType":"json",
+                    "success":function(res){
+                        if(res.status === 200) {
+                            layer.msg("操作成功！");
+                            generatePage();
+                        }else {
+                            layer.msg("操作失败！"+res.message);
+                        }
+                    },
+                    "error": error
+                });
+                // 关闭模态框
+                $("#confirmModal").modal("hide");
+
+            });
+
+            // 9.给单条删除按钮绑定单击响应函数
+            rolePageBody.on("click",".removeBtn",function(){
+
+                // 从当前按钮出发获取角色名称
+                let roleName = $(this).parent().prev().text();
+
+                // 创建role对象存入数组
+                let roleArray = [{
+                    roleId:this.id,
+                    roleName:roleName
+                }];
+
+                // 调用专门的函数打开模态框
+                showConfirmModal(roleArray);
+
+            });
+
+            // 10.给总的checkbox绑定单击响应函数
+            $("#summaryBox").click(function(){
+
+                // ①获取当前多选框自身的状态
+                let currentStatus = this.checked;
+
+                // ②用当前多选框的状态设置其他多选框
+                $(".itemBox").prop("checked", currentStatus);
+
+            });
+
+            // 11.全选、全不选的反向操作
+            rolePageBody.on("click",".itemBox",function(){
+
+                // 获取当前已经选中的.itemBox的数量
+                let checkedBoxCount = $(".itemBox:checked").length;
+
+                // 获取全部.itemBox的数量
+                let totalBoxCount = $(".itemBox").length;
+
+                // 使用二者的比较结果设置总的checkbox
+                $("#summaryBox").prop("checked", checkedBoxCount === totalBoxCount);
+
+            });
+
+            // 12.给批量删除的按钮绑定单击响应函数
+            $("#batchRemoveBtn").click(function(){
+
+                // 创建一个数组对象用来存放后面获取到的角色对象
+                let roleArray = [];
+
+                // 遍历当前选中的多选框
+                $(".itemBox:checked").each(function(){
+
+                    // 使用this引用当前遍历得到的多选框
+                    let roleId = this.id;
+
+                    // 通过DOM操作获取角色名称
+                    let roleName = $(this).parent().next().text();
+
+                    roleArray.push({
+                        "roleId":roleId,
+                        "roleName":roleName
+                    });
+                });
+
+                // 检查roleArray的长度是否为0
+                if(roleArray.length === 0) {
+                    layer.msg("请至少选择一个执行删除");
+                    return ;
+                }
+
+                // 调用专门的函数打开模态框
+                showConfirmModal(roleArray);
+            });
+
+            // 13.给分配权限按钮绑定单击响应函数
+            rolePageBody.on("click",".checkBtn",function(){
+
+                // 把当前角色id存入全局变量
+                window.roleId = this.id;
+
+                // 打开模态框
+                $("#assignModal").modal("show");
+                // 在模态框中装载树Auth 的形结构数据
+                fillAuthTree();
+            });
+
+            // 14.给分配权限模态框中的“分配”按钮绑定单击响应函数
+            $("#assignBtn").click(function(){
+
+                // ①收集树形结构的各个节点中被勾选的节点
+                // [1]声明一个专门的数组存放id @see [4]
+
+                // [2]获取zTreeObj对象
+                let zTreeObj = $.fn.zTree.getZTreeObj("authTreeDemo");
+
+                // [3]获取全部被勾选的节点
+                let checkedNodes = zTreeObj.getCheckedNodes();
+
+                // [4]遍历checkedNodes
+                const authIdArray = checkedNodes.map(item=>item.id);
+
+                // ②发送请求执行分配
+                const requestBody = {
+                    "authIdArray":authIdArray,
+                    // 为了服务器端handler方法能够统一使用List<Integer>方式接收数据，roleId也存入数组
+                    "roleId":[window.roleId]
+                };
+
+                $.ajax({
+                    "url":"assign/do/role/assign/auth.json",
+                    "type":"post",
+                    "data":JSON.stringify(requestBody),
+                    "contentType":"application/json;charset=UTF-8",
+                    "dataType":"json",
+                    "success":function(res){
+                        if(res.status === 200) {
+                            layer.msg("操作成功！");
+                            // 关闭模态框
+                            $("#assignModal").modal("hide");
+                        }else {
+                            layer.msg("操作失败！"+res.message);
+                        }
+                    },
+                    "error":error
                 });
             });
         })
@@ -205,5 +359,6 @@
 <%@include file="/WEB-INF/modal-role-add.jsp" %>
 <%@include file="/WEB-INF/modal-role-edit.jsp" %>
 <%@include file="/WEB-INF/modal-role-confirm.jsp" %>
+<%@include file="/WEB-INF/modal-role-assign-auth.jsp" %>
 </body>
 </html>

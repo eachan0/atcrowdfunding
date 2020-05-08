@@ -23,7 +23,7 @@
                         <a href="role/to/page.html"><i class="glyphicon glyphicon-king"></i> 角色维护</a>
                     </li>
                     <li style="height:30px;">
-                        <a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 菜单维护</a>
+                        <a href="menu/to/page.html"><i class="glyphicon glyphicon-lock"></i> 菜单维护</a>
                     </li>
                 </ul>
             </li>

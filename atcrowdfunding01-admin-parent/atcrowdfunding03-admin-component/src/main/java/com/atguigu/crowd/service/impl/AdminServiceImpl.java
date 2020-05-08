@@ -13,7 +13,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 
 /**
@@ -67,7 +71,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         entity.setUserPswd(CrowdUtil.md5Encoding(entity.getUserPswd()));
         try {
             this.save(entity);
-        }catch (DuplicateKeyException e){
+        } catch (DuplicateKeyException e) {
             throw new LoginAcctAlreadyExistsException("抱歉,账号已经被注册");
         }
     }
@@ -76,5 +80,14 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     public void modifyAdmin(AdminEntity entity) {
         entity.setLoginAcct(null).setUserPswd(null).setCreateTime(null);
         this.updateById(entity);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void saveAdminRoleRelationship(Integer id, List<Integer> roleList) {
+        this.baseMapper.deleteRelationship(id);
+        if (!CollectionUtils.isEmpty(roleList)) {
+            this.baseMapper.insertRelationship(id, roleList);
+        }
     }
 }

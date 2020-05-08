@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.crowd.mapper.AuthMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.atguigu.crowd.entity.AuthEntity">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="title" property="title" />
+        <result column="category_id" property="categoryId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, title, category_id
+    </sql>
+    <insert id="insertNewRelationship">
+        insert into inner_role_auth(role_id,auth_id) values
+        <foreach collection="authIdList" item="authId" separator=",">
+            (#{roleId},#{authId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteOldRelationship">
+        delete from inner_role_auth where role_id = #{roleId}
+    </delete>
+
+    <select id="selectAuthIdByRoleId" resultType="integer">
+        select auth_id from inner_role_auth where role_id = #{rId}
+    </select>
+
+</mapper>

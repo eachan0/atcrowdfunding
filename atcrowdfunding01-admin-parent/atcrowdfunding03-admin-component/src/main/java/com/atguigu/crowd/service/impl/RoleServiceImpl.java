@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色表 服务实现类
@@ -30,5 +32,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleEntity> impleme
         wrapper.orderByAsc(RoleEntity::getId);
         Page<RoleEntity> page = this.page(new Page<>(pageNum, pageSize), wrapper);
         return Result.success(page, page.getTotal());
+    }
+
+    @Override
+    public List<RoleEntity> assignRole(Integer id) {
+        return this.baseMapper.selectAssignRole(id);
+    }
+
+    @Override
+    public List<RoleEntity> unAssignRole(Integer id) {
+        return this.baseMapper.selectUnAssignRole(id);
     }
 }

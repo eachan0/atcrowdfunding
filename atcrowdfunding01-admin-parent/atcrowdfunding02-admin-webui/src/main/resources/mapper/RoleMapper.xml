@@ -12,5 +12,15 @@
     <sql id="Base_Column_List">
         id, name
     </sql>
+    <select id="selectAssignRole" resultType="com.atguigu.crowd.entity.RoleEntity">
+        select <include refid="Base_Column_List"/> from t_role where id in (
+            select role_id from inner_admin_role where admin_id = #{id}
+        )
+    </select>
+    <select id="selectUnAssignRole" resultType="com.atguigu.crowd.entity.RoleEntity">
+        select <include refid="Base_Column_List"/> from t_role where id not in (
+            select role_id from inner_admin_role where admin_id = #{id}
+        )
+    </select>
 
 </mapper>
