@@ -24,7 +24,7 @@
         <skipTests>true</skipTests>
 
         <projectspring.version>5.2.5.RELEASE</projectspring.version>
-        <spring.version>5.3.1.RELEASE</spring.version>
+        <projectsecurity.version>5.3.1.RELEASE</projectsecurity.version>
         <mybatis-plus.version>3.3.1.tmp</mybatis-plus.version>
         <mysql.version>8.0.19</mysql.version>
     </properties>
@@ -86,19 +86,19 @@
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-web</artifactId>
-                <version>#{security.version}</version>
+                <version>${projectsecurity.version}</version>
             </dependency>
             <!-- SpringSecurity 配置-->
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-config</artifactId>
-                <version>#{security.version}</version>
+                <version>${projectsecurity.version}</version>
             </dependency>
             <!-- SpringSecurity 标签库-->
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-taglibs</artifactId>
-                <version>#{security.version}</version>
+                <version>${projectsecurity.version}</version>
             </dependency>
             <!-- Spring 进行JSON 数据转换依赖-->
             <dependency>

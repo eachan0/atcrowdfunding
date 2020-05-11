@@ -83,4 +83,16 @@
         <!-- 为了让Ajax请求能够顺利拿到JSON格式的响应数据，我们另外配置json扩展名 -->
         <url-pattern>*.json</url-pattern>
     </servlet-mapping>
+
+    <!-- SpringSecurity 会根据DelegatingFilterProxy 的filter-name 到IOC 容器中
+        查找所需要的bean。所以filter-name 必须是springSecurityFilterChain 名字。
+    -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

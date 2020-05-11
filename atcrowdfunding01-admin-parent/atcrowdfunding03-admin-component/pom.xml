@@ -70,5 +70,20 @@
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+        <!-- SpringSecurity 对Web 应用进行权限管理-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+        <!-- SpringSecurity 配置-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+        <!-- SpringSecurity 标签库-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+        </dependency>
     </dependencies>
 </project>
