@@ -1,7 +1,6 @@
 package com.atguigu.crowd.util.enums;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -19,7 +18,13 @@ public enum ExceptionEnum {
     /**
      * 唯一索引不满足
      */
-    DUPLICATE_KEY(HttpStatus.INTERNAL_SERVER_ERROR.value(),"数据已存在");
+    DUPLICATE_KEY(HttpStatus.INTERNAL_SERVER_ERROR.value(),"数据已存在"),
+
+    /**
+     * 没有权限
+     */
+    ACCESS_DENIED(HttpStatus.FORBIDDEN.value(),HttpStatus.FORBIDDEN.getReasonPhrase())
+    ;
 
     private int code;
     private String message;

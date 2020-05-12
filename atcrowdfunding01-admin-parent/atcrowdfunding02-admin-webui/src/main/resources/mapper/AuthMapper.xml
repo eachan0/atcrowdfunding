@@ -28,5 +28,11 @@
     <select id="selectAuthIdByRoleId" resultType="integer">
         select auth_id from inner_role_auth where role_id = #{rId}
     </select>
+    <select id="selectAuthNameByAdminId" resultType="java.lang.String">
+        SELECT a.name from t_auth a
+           LEFT JOIN inner_role_auth b on a.id = b.auth_id
+           LEFT JOIN inner_admin_role c on b.role_id = c.role_id
+        where c.admin_id = #{id};
+    </select>
 
 </mapper>

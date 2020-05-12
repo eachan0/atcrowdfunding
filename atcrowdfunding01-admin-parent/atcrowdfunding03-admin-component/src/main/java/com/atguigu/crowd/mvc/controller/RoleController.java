@@ -5,6 +5,7 @@ import com.atguigu.crowd.service.RoleService;
 import com.atguigu.crowd.util.Result;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class RoleController {
     @Autowired
     private RoleService service;
 
+    @PreAuthorize("hasRole('部长')")
     @GetMapping(value = "get/page/info.json")
     public Result<Page<RoleEntity>> getPageInfo(String keyword,
                                                 @RequestParam(defaultValue = "1") Integer pageNum,

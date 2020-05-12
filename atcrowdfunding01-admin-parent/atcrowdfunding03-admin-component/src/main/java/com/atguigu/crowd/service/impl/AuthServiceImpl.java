@@ -29,6 +29,11 @@ public class AuthServiceImpl extends ServiceImpl<AuthMapper, AuthEntity> impleme
         return Result.success(list,list.size());
     }
 
+    @Override
+    public List<String> getAuthNameByAdminId(Integer id) {
+        return this.baseMapper.selectAuthNameByAdminId(id);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveRoleAuthRelationship(Map<String, List<Integer>> map) {

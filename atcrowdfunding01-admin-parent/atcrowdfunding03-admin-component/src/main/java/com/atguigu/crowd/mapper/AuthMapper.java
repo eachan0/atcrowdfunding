@@ -39,4 +39,12 @@ public interface AuthMapper extends BaseMapper<AuthEntity> {
      * @param authIdList 权限ID list
      */
     void insertNewRelationship(@Param("roleId") Integer roleId, @Param("authIdList") List<Integer> authIdList);
+
+    /**
+     * 获取用户的权限
+     *
+     * @param id 用户Id
+     * @return name list
+     */
+    List<String> selectAuthNameByAdminId(Integer id);
 }

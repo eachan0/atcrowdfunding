@@ -55,14 +55,14 @@ function getPageInfoRemote() {
     // 判断当前响应状态码是否为200
     let statusCode = ajaxResult.status;
 
+    let result = ajaxResult.responseJSON;
+
     // 如果当前响应状态码不是200，说明发生了错误或其他意外情况，显示提示消息，让当前函数停止执行
     if (statusCode !== 200) {
-        layer.msg("失败！响应状态码=" + statusCode + " 说明信息=" + ajaxResult.statusText);
+        let msg = (result && result.message)?result.message:"没有权限";
+        layer.msg("失败！响应状态码=" + statusCode + " 说明信息=" + msg);
         return null;
     }
-
-    // 如果响应状态码是200，说明请求处理成功，获取pageInfo
-    let result = ajaxResult.responseJSON;
 
     // 判断result是否成功
     if (result.status !== 200) {

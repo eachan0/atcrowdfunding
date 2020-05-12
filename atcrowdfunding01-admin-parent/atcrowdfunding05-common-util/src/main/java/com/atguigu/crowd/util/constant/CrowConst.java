@@ -54,4 +54,11 @@ public class CrowConst {
      * 管理员维护界面参数名
      */
     public static final String ATTR_ADMIN_PAGE = "adminPageInfo";
+
+    /**
+     * security 忽略的资源
+     */
+    public static final String[] ATTR_SECURITY_IGNORE = {"/bootstrap/**",
+            "/crowd/**", "/css/**", "/fonts/**", "/img/**", "/jquery/**", "/layui/**",
+            "/script/**", "/ztree/**", "/admin/to/login/page.html" };
 }

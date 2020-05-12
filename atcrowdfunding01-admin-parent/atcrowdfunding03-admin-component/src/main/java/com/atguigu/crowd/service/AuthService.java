@@ -26,6 +26,14 @@ public interface AuthService extends IService<AuthEntity> {
     Result<List<Integer>> getAuthIdByRoleId(Integer rId);
 
     /**
+     * 获取用户的权限
+     *
+     * @param id 用户Id
+     * @return name list
+     */
+    List<String> getAuthNameByAdminId(Integer id);
+
+    /**
      * 保存角色权限对应关系
      *
      * @param map 对应数据

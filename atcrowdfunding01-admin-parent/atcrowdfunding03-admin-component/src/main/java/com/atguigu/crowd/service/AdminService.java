@@ -1,7 +1,6 @@
 package com.atguigu.crowd.service;
 
 import com.atguigu.crowd.entity.AdminEntity;
-import com.atguigu.crowd.util.Result;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -57,4 +56,12 @@ public interface AdminService extends IService<AdminEntity> {
      * @param roleList 角色id list
      */
     void saveAdminRoleRelationship(Integer id, List<Integer> roleList);
+
+    /**
+     * 获取用户
+     *
+     * @param username 用户名
+     * @return entity
+     */
+    AdminEntity getByUsername(String username);
 }

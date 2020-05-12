@@ -11,7 +11,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -31,6 +33,9 @@ import java.util.List;
 @Slf4j
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> implements AdminService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public AdminEntity doLogin(String username, String password) {
@@ -68,7 +73,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
 
     @Override
     public void saveAdmin(AdminEntity entity) {
-        entity.setUserPswd(CrowdUtil.md5Encoding(entity.getUserPswd()));
+//        entity.setUserPswd(CrowdUtil.md5Encoding(entity.getUserPswd()));
+        entity.setUserPswd(passwordEncoder.encode(entity.getUserPswd()));
         try {
             this.save(entity);
         } catch (DuplicateKeyException e) {
@@ -89,5 +95,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         if (!CollectionUtils.isEmpty(roleList)) {
             this.baseMapper.insertRelationship(id, roleList);
         }
+    }
+
+    @Override
+    public AdminEntity getByUsername(String username) {
+        return this.getOne(
+                new LambdaQueryWrapper<AdminEntity>().eq(AdminEntity::getLoginAcct, username)
+        );
     }
 }

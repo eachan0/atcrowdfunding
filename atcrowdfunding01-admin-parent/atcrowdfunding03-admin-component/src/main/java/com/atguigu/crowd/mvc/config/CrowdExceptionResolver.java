@@ -11,6 +11,7 @@ import com.atguigu.crowd.util.exception.LoginAcctAlreadyExistsException;
 import com.atguigu.crowd.util.exception.LoginFailedException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -59,6 +60,11 @@ public class CrowdExceptionResolver {
     @ExceptionHandler(value = LoginAcctAlreadyExistsException.class)
     public ModelAndView resolveDataAlreadyExistsException(LoginAcctAlreadyExistsException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
         return resolveView(exception, VIEW_ADMIN_ADD);
+    }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public ModelAndView accessDeniedException(AccessDeniedException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        return resolveViewAndJson(HttpStatus.FORBIDDEN.value(), exception, request, response);
     }
 
     protected ModelAndView resolveViewAndJson(int status, Exception exception, HttpServletRequest request, HttpServletResponse response) throws IOException {

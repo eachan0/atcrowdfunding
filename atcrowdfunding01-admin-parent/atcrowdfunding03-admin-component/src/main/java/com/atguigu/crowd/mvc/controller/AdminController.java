@@ -6,6 +6,7 @@ import com.atguigu.crowd.service.AdminService;
 import com.atguigu.crowd.util.constant.CrowConst;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +60,7 @@ public class AdminController {
         return "redirect:/admin/get/page.html?pageNum=" + pageNum + "&keyword=" + keyword;
     }
 
+    @PreAuthorize("hasAuthority('user:add')")
     @PostMapping("save.html")
     public String saveAdmin(AdminEntity entity) {
         service.saveAdmin(entity);

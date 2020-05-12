@@ -64,4 +64,10 @@
 
         </tx:attributes>
     </tx:advice>
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <!-- No visible WebSecurityExpressionHandler instance could be found -->
+    <!-- 原因：AbstractAuthorizeTag 类默认是查找“根级别”的IOC 容器。而根级别的 IOC 容器中没有扫描SpringSecurity 的配置类，所以没有相关的bean。 -->
+    <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 </beans>

@@ -33,16 +33,16 @@
 </nav>
 
 <div class="container">
-    <form class="form-signin" role="form" action="admin/do/login.html" method="post">
+    <form class="form-signin" role="form" action="security/do/login.html" method="post">
         <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 管理员登录</h2>
         <p>${requestScope.exception.message }</p>
         <div class="form-group has-success has-feedback">
-            <input value="admin" name="username" type="text" class="form-control"
+            <input value="admin" name="loginAcct" type="text" class="form-control"
                    id="inputSuccess3" placeholder="请输入登录账号" autofocus>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <input value="123456" name="password" type="text" class="form-control" id="inputSuccess4"
+            <input value="123123" name="userPswd" type="text" class="form-control" id="inputSuccess4"
                    placeholder="请输入登录密码" style="margin-top:10px;">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
