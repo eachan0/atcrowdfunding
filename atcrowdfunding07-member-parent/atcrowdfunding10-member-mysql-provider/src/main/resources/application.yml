@@ -1,0 +1,25 @@
+server:
+  port: 2000
+spring:
+  application:
+    name: atguigu-crowd-mysql
+  datasource:
+    name: mydb
+    url: jdbc:mysql://192.168.0.199:3306/project_crowd?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+logging:
+  level:
+    com.atguigu.crowd.mysql.mapper: debug

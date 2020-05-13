@@ -1,0 +1,14 @@
+server:
+  port: 4000
+spring:
+  application:
+    name: atguigu-crowd-auth
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000

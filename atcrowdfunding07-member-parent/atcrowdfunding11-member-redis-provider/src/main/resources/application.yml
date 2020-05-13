@@ -1,0 +1,13 @@
+server:
+  port: 3000
+spring:
+  application:
+    name: atguigu-crowd-redis
+  redis:
+    host: 192.168.0.107
+    password: 123321cc..
+    database: 14
+    port: 6381
+  cloud:
+    nacos:
+      server-addr: localhost:8848

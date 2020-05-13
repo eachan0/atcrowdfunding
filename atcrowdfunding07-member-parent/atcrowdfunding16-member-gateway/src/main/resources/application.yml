@@ -1,0 +1,23 @@
+server:
+  port: 80
+spring:
+  application:
+    name: atguigu-crowd-gateway
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: auth
+          uri: lb://atguigu-crowd-auth
+          predicates:
+            - Path=/**
+#            - After=2020-03-15T16:27:47.518211700+08:00[Asia/Shanghai] # get by ZonedDateTime.now()
+#            - Before=2020-03-15T16:27:47.518211700+08:00[Asia/Shanghai]
+#            - Between=2020-03-15T16:27:47.518211700+08:00[Asia/Shanghai],2020-03-15T17:27:47.518211700+08:00[Asia/Shanghai]
+#            - Cookie=username,zyc  #name,value-reg  curl http://localhost:9527/payment/lb --cookie "username=zyc"
+#            - Header=X-Resquest-Id,\d+ #name,value-reg curl http://localhost:9527/payment/lb --cookie "username=zyc" -H "X-Resquest-Id:123"
+
