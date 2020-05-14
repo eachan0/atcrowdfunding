@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import java.util.TimeZone;
 
@@ -14,6 +15,7 @@ import java.util.TimeZone;
  * @date 2020年05月13日
  * @desc CrowdAuthMain4000
  */
+@EnableRedisHttpSession
 @EnableFeignClients(basePackages = "com.atguigu.crowd.api")
 @EnableDiscoveryClient
 @SpringBootApplication

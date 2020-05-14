@@ -7,6 +7,7 @@ import com.atguigu.crowd.common.constant.AppConst;
 import com.atguigu.crowd.common.entity.AppResult;
 import com.atguigu.crowd.entity.dto.Member;
 import com.atguigu.crowd.entity.po.MemberEntity;
+import com.atguigu.crowd.entity.vo.MemberVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author <a href="zyc199777@gmail.com">Zhu yc</a>
@@ -25,6 +29,8 @@ import org.springframework.web.bind.annotation.PostMapping;
  */
 @Controller
 public class ViewController {
+
+    public static final String HOST = "http://www.crowd.com";
 
     @Autowired
     private MemberRemoteService memberRemoteService;
@@ -39,7 +45,7 @@ public class ViewController {
     }
 
     @PostMapping("/auth/do/member/register")
-    public String doMemberRegister(@Validated Member member, ModelMap modelMap){
+    public String doMemberRegister(@Validated Member member, ModelMap modelMap) {
 
         // 1.获取用户输入的手机号
         String phoneNum = member.getPhoneNum();
@@ -52,14 +58,14 @@ public class ViewController {
 
         // 4.检查查询操作是否有效
         int result = appResult.getStatus();
-        if(result != HttpStatus.HTTP_OK) {
+        if (result != HttpStatus.HTTP_OK) {
             modelMap.addAttribute(AppConst.ATTR_NAME_MESSAGE, appResult.getMessage());
             return "member-reg";
         }
 
         String redisCode = appResult.getData();
 
-        if(!StringUtils.hasText(redisCode)) {
+        if (!StringUtils.hasText(redisCode)) {
             modelMap.addAttribute(AppConst.ATTR_NAME_MESSAGE, AppConst.MESSAGE_CODE_NOT_EXISTS);
             return "member-reg";
         }
@@ -67,7 +73,7 @@ public class ViewController {
         // 5.如果从Redis能够查询到value则比较表单验证码和Redis验证码
         String formCode = member.getCode();
 
-        if(!redisCode.equals(formCode)) {
+        if (!redisCode.equals(formCode)) {
             modelMap.addAttribute(AppConst.ATTR_NAME_MESSAGE, AppConst.MESSAGE_CODE_INVALID);
             return "member-reg";
         }
@@ -91,12 +97,52 @@ public class ViewController {
         // ③调用远程方法
         AppResult<String> saveResult = memberRemoteService.saveMember(entity);
 
-        if(saveResult.getStatus() != HttpStatus.HTTP_OK) {
+        if (saveResult.getStatus() != HttpStatus.HTTP_OK) {
             modelMap.addAttribute(AppConst.ATTR_NAME_MESSAGE, saveResult.getMessage());
             return "member-reg";
         }
 
         // 使用重定向避免刷新浏览器导致重新执行注册流程
-        return "redirect:/auth/member/to/login/page";
+        return "redirect:" + HOST + "/auth/member/to/login/page";
+    }
+
+    @PostMapping("/auth/member/do/login")
+    public String doMemberLogin(@RequestParam String loginacct, @RequestParam String userpswd,
+                                ModelMap modelMap, HttpSession session) {
+        AppResult<MemberEntity> appResult = memberRemoteService.getByAcctRemote(loginacct);
+        if (appResult.getStatus() != HttpStatus.HTTP_OK) {
+            modelMap.addAttribute(AppConst.ATTR_NAME_MESSAGE, appResult.getMessage());
+            return "member-login";
+        }
+
+        MemberEntity entity = appResult.getData();
+        if (entity == null) {
+            modelMap.addAttribute(AppConst.ATTR_NAME_MESSAGE, AppConst.MESSAGE_LOGIN_FAILED);
+            return "member-login";
+        }
+
+        // 2.比较密码
+        String userpswdDataBase = entity.getUserpswd();
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        boolean matcheResult = passwordEncoder.matches(userpswd, userpswdDataBase);
+
+        if (!matcheResult) {
+            modelMap.addAttribute(AppConst.ATTR_NAME_MESSAGE, AppConst.MESSAGE_LOGIN_FAILED);
+            return "member-login";
+        }
+
+        // 3.创建MemberLoginVO对象存入Session域
+        MemberVO member = new MemberVO(entity.getId(), entity.getUsername(), entity.getEmail());
+        session.setAttribute(AppConst.ATTR_NAME_LOGIN_MEMBER, member);
+
+        return "redirect:" + HOST + "/auth/member/center/page";
+    }
+
+    @GetMapping("/auth/member/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:" + HOST;
     }
 }

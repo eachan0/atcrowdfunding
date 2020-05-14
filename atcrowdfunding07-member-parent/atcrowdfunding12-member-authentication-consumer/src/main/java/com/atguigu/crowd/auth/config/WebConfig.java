@@ -14,6 +14,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/auth/member/reg/page.html").setViewName("member-reg");
+        registry.addViewController("/auth/member/reg/page").setViewName("member-reg");
+        registry.addViewController("/auth/member/login/page").setViewName("member-login");
+        registry.addViewController("/auth/member/center/page").setViewName("member-center");
     }
 }

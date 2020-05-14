@@ -3,6 +3,13 @@ server:
 spring:
   application:
     name: atguigu-crowd-gateway
+  redis:
+    host: 192.168.0.107
+    password: 123321cc..
+    database: 14
+    port: 6381
+  session:
+    store-type: redis
   cloud:
     nacos:
       server-addr: localhost:8848

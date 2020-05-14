@@ -12,6 +12,7 @@ import java.util.TimeZone;
  * @date 2020年05月13日
  * @desc CrowdGatewayMain80
  */
+//@EnableRedisWebSession
 @SpringBootApplication
 public class CrowdGatewayMain80 {
     public static void main(String[] args) {
