@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.crowd.mysql.mapper.MemberLaunchInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.atguigu.crowd.entity.po.MemberLaunchInfoEntity">
+        <id column="id" property="id" />
+        <result column="memberid" property="memberid" />
+        <result column="description_simple" property="descriptionSimple" />
+        <result column="description_detail" property="descriptionDetail" />
+        <result column="phone_num" property="phoneNum" />
+        <result column="service_num" property="serviceNum" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, memberid, description_simple, description_detail, phone_num, service_num
+    </sql>
+
+</mapper>

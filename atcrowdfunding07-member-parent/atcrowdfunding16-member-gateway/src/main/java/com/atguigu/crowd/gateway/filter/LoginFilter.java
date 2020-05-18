@@ -8,7 +8,6 @@ import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Mono;
 
 /**
@@ -34,7 +33,7 @@ public class LoginFilter implements GlobalFilter, Ordered {
         if (judge) {
             return chain.filter(exchange);
         }
-        Mono<WebSession> session = exchange.getSession();
+
         return chain.filter(exchange);
         /*List<HttpCookie> loginacct = request.getCookies().get("loginacct");
         if (!CollectionUtils.isEmpty(loginacct)){

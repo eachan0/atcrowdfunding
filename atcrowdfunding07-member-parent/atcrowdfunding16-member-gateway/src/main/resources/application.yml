@@ -3,13 +3,6 @@ server:
 spring:
   application:
     name: atguigu-crowd-gateway
-  redis:
-    host: 192.168.0.107
-    password: 123321cc..
-    database: 14
-    port: 6381
-  session:
-    store-type: redis
   cloud:
     nacos:
       server-addr: localhost:8848
@@ -18,6 +11,12 @@ spring:
         locator:
           enabled: true
       routes:
+        - id: auth
+          uri: lb://atguigu-crowd-project
+          predicates:
+            - Path=/project/**
+          filters:
+            - StripPrefix=1
         - id: auth
           uri: lb://atguigu-crowd-auth
           predicates:
@@ -28,3 +27,6 @@ spring:
 #            - Cookie=username,zyc  #name,value-reg  curl http://localhost:9527/payment/lb --cookie "username=zyc"
 #            - Header=X-Resquest-Id,\d+ #name,value-reg curl http://localhost:9527/payment/lb --cookie "username=zyc" -H "X-Resquest-Id:123"
 
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000

@@ -60,7 +60,9 @@ public class CodeGenerator {
                 .setEntityBooleanColumnRemoveIsPrefix(true)
                 .setRestControllerStyle(true)
                 .setEntityTableFieldAnnotationEnable(true)
-                .setInclude("t_member");
+                .setInclude("t_member_confirm_info",
+                        "t_return","t_member_launch_info",
+                        "t_project_item_pic","t_project","t_project_tag","t_tag","t_project_type","t_type");
 
         PackageConfig pc = new PackageConfig();
         pc.setParent("com.atguigu.crowd.entity")

@@ -21,7 +21,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class CrowdAuthMain4000 {
     public static void main(String[] args) {
-        TimeZone.setDefault(TimeZone.getTimeZone(AppConst.ATTR_APP_TIMEZONE));
+        TimeZone.setDefault(AppConst.ATTR_APP_TIMEZONE);
         SpringApplication.run(CrowdAuthMain4000.class, args);
     }
 }

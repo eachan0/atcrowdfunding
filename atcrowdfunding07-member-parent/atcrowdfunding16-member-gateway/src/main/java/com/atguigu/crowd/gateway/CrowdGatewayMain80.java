@@ -16,7 +16,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class CrowdGatewayMain80 {
     public static void main(String[] args) {
-        TimeZone.setDefault(TimeZone.getTimeZone(AppConst.ATTR_APP_TIMEZONE));
+        TimeZone.setDefault(AppConst.ATTR_APP_TIMEZONE);
         SpringApplication.run(CrowdGatewayMain80.class, args);
     }
 }

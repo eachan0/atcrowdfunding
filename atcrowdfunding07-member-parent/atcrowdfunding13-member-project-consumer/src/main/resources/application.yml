@@ -1,0 +1,28 @@
+server:
+  port: 5000
+spring:
+  application:
+    name: atguigu-crowd-project
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  redis:
+    host: 192.168.0.107
+    password: 123321cc..
+    database: 14
+    port: 6381
+  session:
+    store-type: redis
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+    alicloud:
+      access-key: LTAI4GF4vqA5LMHVwDb1rWdL
+      secret-key: ohBqmt8vnEGVHYrDoy4G042Co9elsu
+      oss:
+        endpoint: oss-cn-beijing.aliyuncs.com
+custom:
+  oss:
+    bucketName: atguigu-crowd-zhuyc
+    urlPrefix: https://
+    urlSuffix: oss-cn-beijing.aliyuncs.com
