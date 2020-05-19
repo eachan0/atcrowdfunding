@@ -17,12 +17,12 @@ spring:
     nacos:
       server-addr: localhost:8848
     alicloud:
-      access-key: LTAI4GF4vqA5LMHVwDb1rWdL
-      secret-key: ohBqmt8vnEGVHYrDoy4G042Co9elsu
+      access-key: 123456
+      secret-key: 123456
       oss:
         endpoint: oss-cn-beijing.aliyuncs.com
 custom:
   oss:
-    bucketName: atguigu-crowd-zhuyc
+    bucketName: 123456
     urlPrefix: https://
     urlSuffix: oss-cn-beijing.aliyuncs.com
