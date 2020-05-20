@@ -1,7 +1,11 @@
 package com.atguigu.crowd.mysql.mapper;
 
 import com.atguigu.crowd.entity.po.ProjectEntity;
+import com.atguigu.crowd.entity.vo.DetailProjectVO;
+import com.atguigu.crowd.entity.vo.PortalTypeVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface ProjectMapper extends BaseMapper<ProjectEntity> {
 
+    List<PortalTypeVO> selectPortalTypeVOList();
+
+    DetailProjectVO selectDetailProjectVO(Integer projectId);
 }

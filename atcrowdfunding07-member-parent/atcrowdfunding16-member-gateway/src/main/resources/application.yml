@@ -11,10 +11,22 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: auth
+        - id: pay
+          uri: lb://atguigu-crowd-pay
+          predicates:
+            - Path=/pay/**
+          filters:
+            - StripPrefix=1
+        - id: project
           uri: lb://atguigu-crowd-project
           predicates:
             - Path=/project/**
+          filters:
+            - StripPrefix=1
+        - id: order
+          uri: lb://atguigu-crowd-order
+          predicates:
+            - Path=/order/**
           filters:
             - StripPrefix=1
         - id: auth

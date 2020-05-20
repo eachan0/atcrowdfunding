@@ -408,37 +408,32 @@
 
 	</div>
 	<!-- /container -->
-	<script type="text/javascript" th:src="@{/jquery/jquery-2.1.1.min.js}"
-		src="jquery/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript"
-		th:src="@{/bootstrap/js/bootstrap.min.js}"
-		src="bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" th:src="@{/script/docs.min.js}"
-		src="script/docs.min.js"></script>
-	<script type="text/javascript" th:src="@{/script/back-to-top.js}"
-		src="script/back-to-top.js"></script>
+	<script type="text/javascript" th:src="@{/jquery/jquery-2.1.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/script/docs.min.js}"></script>
+	<script type="text/javascript" th:src="@{/script/back-to-top.js}"></script>
 	<script type="text/javascript">
 		$('#myTab a').click(function(e) {
 			e.preventDefault()
 			$(this).tab('show')
 		});
-		
+
 		$(function() {
-			
+
 			// 回报信息的表单部分默认隐藏
 			$(".returnFormDiv").hide();
-			
+
 			// 点击添加回报按钮切换表单部分的显示状态
 			$("#addReturnBtn").click(function(){
-				
+
 				// toggle()把显示的元素隐藏，把隐藏的元素显示
 				$(".returnFormDiv").toggle();
 			});
 		});
-		
+
 		// 声明一个全局的returnObj对象用于存储整个表单的数据（包括上传到OSS的图片访问路径）
 		var returnObj = {};
-		
+
 		// 点击上传图片按钮打开文件选择框
 		$("#uploadBtn").click(function(){
 			$("[name=returnPicture]").click();
@@ -446,20 +441,20 @@
 
 		// 在文件上传框的值改变事件响应函数中预览并上传图片
 		$("[name=returnPicture]").change(function(event){
-			
+
 			var file = event.target.files[0];
-			
+
 			var url = window.url || window.webkitURL;
-			
+
 			var path = url.createObjectURL(file);
-			
+
 			$(this).next().next().next().next().attr("src",path).show();
-			
+
 			// 将上传的文件封装到FormData对象中
 			var formData = new FormData();
-			
+
 			formData.append("returnPicture", file);
-			
+
 			// 发送Ajax请求上传文件
 			$.ajax({
 				"url":"[[@{/project/create/upload/return/picture.json}]]",
@@ -468,35 +463,28 @@
 				"contentType":false,
 				"processData":false,
 				"dataType":"json",
-				"success":function(response){
-					
-					var result = response.result;
-					
-					if(result == "SUCCESS") {
+				"success":function(res){
+					if(res.status === 200) {
 						alert("上传成功！");
-						
 						// 如果上传成功，则从响应体数据中获取图片的访问路径
-						returnObj.describPicPath = response.data;
+						returnObj.describPicPath = res.data;
+					}else {
+						alert(res.message);
 					}
-					
-					if(result == "FAILED") {
-						alert(response.message);
-					}
-					
 				},
 				"error":function(response){
-					alert(response.status + " " + response.statusText);
+					alert("图片上传失败");
 				}
 			});
-			
+
 		});
-		
+
 		// 声明序号保存表格中数据的序号
 		var order = 0;
 
 		// 点击确定按钮，绑定单击响应函数
 		$("#okBtn").click(function(){
-			
+
 			// 1.收集表单数据
 			returnObj.type = $("[name=type]:checked").val();
 			returnObj.supportmoney = $("[name=supportmoney]").val();
@@ -507,18 +495,17 @@
 			returnObj.freight = $("[name=freight]").val();
 			returnObj.invoice = $("[name=invoice]:checked").val();
 			returnObj.returndate = $("[name=returndate]").val();
-			
+
 			// 2.发送Ajax请求
 			$.ajax({
 				"url" : "[[@{/project/create/save/return.json}]]",
 				"type": "post",
 				"dataType": "json",
 				"data": returnObj,
-				"success": function(response) {
-					var result = response.result;
-					if(result == "SUCCESS") {
+				"success": function(res) {
+					if(res.status === 200) {
 						alert("这一条保存成功！");
-						
+
 						// 使用returnObj填充表格
 						var orderTd = "<td>"+(++order)+"</td>";
 						var supportmoneyTd = "<td>"+returnObj.supportmoney+"</td>";
@@ -529,20 +516,17 @@
 						var freightTd = "<td>"+(returnObj.freight==0?"包邮":returnObj.freight)+"</td>";
 						var operationTd = "<td><button type='button' class='btn btn-primary btn-xs'><i class=' glyphicon glyphicon-pencil'></i></button>&nbsp;<button type='button' class='btn btn-danger btn-xs'><i class=' glyphicon glyphicon-remove'></i></button></td>";
 						var trHTML = "<tr>"+orderTd+supportmoneyTd+countTd+signalpurchaseTd+contentTd+returndateTd+freightTd+operationTd+"</tr>";
-						
+
 						$("#returnTableBody").append(trHTML);
-						
+
 						$("#returnPictureImage").hide();
-					}
-					
-					if(result == "FAILED") {
+					}else {
 						alert("这一条保存失败！");
 					}
-					
 					// 后续操作
 					// 仅仅调用click()函数而不传入回调函数表示点击一下这个按钮
 					$("#resetBtn").click();
-					
+
 					// 将表单部分div隐藏
 					$(".returnFormDiv").hide();
 				}

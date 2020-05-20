@@ -1,0 +1,25 @@
+server:
+  port: 7000
+spring:
+  application:
+    name: atguigu-crowd-pay
+  redis:
+    host: 192.168.0.107
+    password: 123321cc..
+    database: 14
+    port: 6381
+  session:
+    store-type: redis
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+ali:
+  pay:
+    alipay-public-key: 1
+    app-id: 1
+    charset: utf-8
+    gateway-url: https://openapi.alipaydev.com/gateway.do
+    merchant-private-key: 3
+    notify-url: http://erx2gx.natappfree.cc/pay/notify
+    return-url: http://www.crowd.com/pay/return
+    sign-type: RSA2

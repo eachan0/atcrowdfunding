@@ -26,4 +26,5 @@ public class AppConst {
     public static final String MESSAGE_DETAIL_PIC_UPLOAD_FAILED = "详情图片上传失败";
 
     public static final String MESSAGE_TEMPLE_PROJECT_MISSING = "参数失效";
+    public static final String ATTR_NAME_PORTAL_DATA = "portal_data";;
 }

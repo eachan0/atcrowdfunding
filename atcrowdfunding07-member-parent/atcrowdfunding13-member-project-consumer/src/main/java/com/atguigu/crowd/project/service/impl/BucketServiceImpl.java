@@ -43,7 +43,7 @@ public class BucketServiceImpl implements BucketService {
     public String upload(String name, InputStream in) {
         String fullName = fileName(name);
         ossClient.putObject(this.bucketName, fullName, in);
-        return urlPrefix + bucketName + urlSuffix + "/" + fullName;
+        return urlPrefix + bucketName + "." + urlSuffix + "/" + fullName;
     }
 
     @Override

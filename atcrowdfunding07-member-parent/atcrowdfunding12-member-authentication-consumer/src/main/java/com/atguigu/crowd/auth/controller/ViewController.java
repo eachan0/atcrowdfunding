@@ -1,7 +1,7 @@
 package com.atguigu.crowd.auth.controller;
 
 import cn.hutool.http.HttpStatus;
-import com.atguigu.crowd.api.mysqlremote.MemberRemoteService;
+import com.atguigu.crowd.api.mysqlremote.MysqlRemoteService;
 import com.atguigu.crowd.api.redisremote.RedisRemoteService;
 import com.atguigu.crowd.common.constant.AppConst;
 import com.atguigu.crowd.common.entity.AppResult;
@@ -33,16 +33,16 @@ public class ViewController {
     public static final String HOST = "http://www.crowd.com";
 
     @Autowired
-    private MemberRemoteService memberRemoteService;
+    private MysqlRemoteService mysqlRemoteService;
 
     @Autowired
     private RedisRemoteService redisRemoteService;
 
-    @GetMapping("/")
+    /*@GetMapping("/")
     public String showPortalPage() {
         // 这里实际开发中需要加载数据……
         return "portal";
-    }
+    }*/
 
     @PostMapping("/auth/do/member/register")
     public String doMemberRegister(@Validated Member member, ModelMap modelMap) {
@@ -95,7 +95,7 @@ public class ViewController {
         BeanUtils.copyProperties(member, entity);
 
         // ③调用远程方法
-        AppResult<String> saveResult = memberRemoteService.saveMember(entity);
+        AppResult<String> saveResult = mysqlRemoteService.saveMember(entity);
 
         if (saveResult.getStatus() != HttpStatus.HTTP_OK) {
             modelMap.addAttribute(AppConst.ATTR_NAME_MESSAGE, saveResult.getMessage());
@@ -109,7 +109,7 @@ public class ViewController {
     @PostMapping("/auth/member/do/login")
     public String doMemberLogin(@RequestParam String loginacct, @RequestParam String userpswd,
                                 ModelMap modelMap, HttpSession session) {
-        AppResult<MemberEntity> appResult = memberRemoteService.getByAcctRemote(loginacct);
+        AppResult<MemberEntity> appResult = mysqlRemoteService.getByAcctRemote(loginacct);
         if (appResult.getStatus() != HttpStatus.HTTP_OK) {
             modelMap.addAttribute(AppConst.ATTR_NAME_MESSAGE, appResult.getMessage());
             return "member-login";

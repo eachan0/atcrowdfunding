@@ -1,8 +1,8 @@
 server:
-  port: 5000
+  port: 6000
 spring:
   application:
-    name: atguigu-crowd-project
+    name: atguigu-crowd-order
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -16,13 +16,3 @@ spring:
   cloud:
     nacos:
       server-addr: localhost:8848
-    alicloud:
-      access-key: 1
-      secret-key: 2
-      oss:
-        endpoint: oss-cn-beijing.aliyuncs.com
-custom:
-  oss:
-    bucketName: 3
-    urlPrefix: https://
-    urlSuffix: oss-cn-beijing.aliyuncs.com

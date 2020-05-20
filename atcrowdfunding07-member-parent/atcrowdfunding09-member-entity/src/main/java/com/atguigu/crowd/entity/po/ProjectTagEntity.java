@@ -1,17 +1,20 @@
 package com.atguigu.crowd.entity.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zhuyc
@@ -20,6 +23,8 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_project_tag")
 public class ProjectTagEntity implements Serializable {
 
@@ -34,5 +39,8 @@ public class ProjectTagEntity implements Serializable {
     @TableField("tagid")
     private Integer tagid;
 
-
+    public ProjectTagEntity(Integer projectid, Integer tagid) {
+        this.projectid = projectid;
+        this.tagid = tagid;
+    }
 }

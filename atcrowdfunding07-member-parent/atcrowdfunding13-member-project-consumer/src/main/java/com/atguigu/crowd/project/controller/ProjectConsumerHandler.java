@@ -1,18 +1,17 @@
 package com.atguigu.crowd.project.controller;
 
 import cn.hutool.http.HttpStatus;
-import com.atguigu.crowd.api.mysqlremote.ProjectRemoteService;
+import com.atguigu.crowd.api.mysqlremote.MysqlRemoteService;
 import com.atguigu.crowd.common.constant.AppConst;
 import com.atguigu.crowd.common.entity.AppResult;
-import com.atguigu.crowd.entity.vo.MemberConfirmInfoVO;
-import com.atguigu.crowd.entity.vo.MemberVO;
-import com.atguigu.crowd.entity.vo.ProjectVO;
-import com.atguigu.crowd.entity.vo.ReturnVO;
+import com.atguigu.crowd.entity.vo.*;
 import com.atguigu.crowd.project.service.BucketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +30,21 @@ public class ProjectConsumerHandler {
     private BucketService bucketService;
 
     @Autowired
-    private ProjectRemoteService projectRemoteService;
+    private MysqlRemoteService mysqlRemoteService;
+
+    @RequestMapping("/get/project/detail/{projectId}")
+    public String getProjectDetail(@PathVariable("projectId") Integer projectId, Model model) {
+
+        AppResult<DetailProjectVO> resultEntity = mysqlRemoteService.getDetailProjectVORemote(projectId);
+
+        if (resultEntity.getStatus() == HttpStatus.HTTP_OK) {
+            DetailProjectVO detailProjectVO = resultEntity.getData();
+
+            model.addAttribute("detailProjectVO", detailProjectVO);
+        }
+
+        return "project-show-detail";
+    }
 
     @RequestMapping("/create/confirm")
     public String saveConfirm(ModelMap modelMap, HttpSession session, MemberConfirmInfoVO memberConfirmInfoVO) {
@@ -53,7 +66,7 @@ public class ProjectConsumerHandler {
         Integer memberId = memberLoginVO.getId();
 
         // 5.调用远程方法保存projectVO对象
-        AppResult<String> result = projectRemoteService.saveProjectRemote(projectVO, memberId);
+        AppResult<String> result = mysqlRemoteService.saveProjectRemote(projectVO, memberId);
 
         // 6.判断远程的保存操作是否成功
 
