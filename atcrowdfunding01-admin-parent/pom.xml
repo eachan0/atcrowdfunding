@@ -24,7 +24,7 @@
         <skipTests>true</skipTests>
 
         <projectspring.version>5.2.5.RELEASE</projectspring.version>
-        <projectsecurity.version>5.3.1.RELEASE</projectsecurity.version>
+        <projectsecurity.version>5.3.9.RELEASE</projectsecurity.version>
         <mybatis-plus.version>3.3.1.tmp</mybatis-plus.version>
         <mysql.version>8.0.19</mysql.version>
     </properties>
